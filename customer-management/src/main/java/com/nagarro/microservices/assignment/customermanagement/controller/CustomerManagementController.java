@@ -29,42 +29,43 @@ public class CustomerManagementController {
 			System.out.println("Collection exists");
 		}
 	}
+	
+	@GetMapping(path = "/customer")
+	public List<CustomerInformation> getAllAccountInformation() {
+		return jsonDBTemplate.findAll(CustomerInformation.class);
+	}
 
-	@GetMapping("/customer/{customerId}")
+	@GetMapping(path = "/customer/{customerId}")
 	public CustomerInformation getCustomerInformation(@PathVariable int customerId) {
 		return jsonDBTemplate.findById(customerId, CustomerInformation.class);
 	}
 
-	@GetMapping("/customer/accounts/{customerId}")
+	@GetMapping(path="/customer/accounts/{customerId}")
 	public List<String> getCustomerAccounts(@PathVariable int customerId) {
 		CustomerInformation customer = jsonDBTemplate.findById(customerId, CustomerInformation.class);
 		return customer == null ? new ArrayList<>() : customer.getListOfAccounts();
 	}
 
-	@PutMapping("/customer/{customerId}")
+	@PutMapping(path="/customer/{customerId}", consumes = "application/json", produces = "application/json")
 	public CustomerInformation updateCustomerInformation(@RequestBody CustomerInformation newCustomerInformation,
 			@PathVariable int customerId) {
 		CustomerInformation customerToUpdate = jsonDBTemplate.findById(customerId, CustomerInformation.class);
 
-		customerToUpdate.setCustomerName(newCustomerInformation.getCustomerName());
-		customerToUpdate.setAddress(newCustomerInformation.getAddress());
-		customerToUpdate.setListOfAccounts(newCustomerInformation.getListOfAccounts());
+		if (customerToUpdate != null) {
+			customerToUpdate.setCustomerName(newCustomerInformation.getCustomerName());
+			customerToUpdate.setAddress(newCustomerInformation.getAddress());
+			customerToUpdate.setListOfAccounts(newCustomerInformation.getListOfAccounts());
 
-		jsonDBTemplate.upsert(customerToUpdate);
-
-		return newCustomerInformation;
+			jsonDBTemplate.upsert(customerToUpdate);
+		}
+		return customerToUpdate;
 	}
 
 	@PostMapping(path = "/customer", consumes = "application/json", produces = "application/json")
-	public void createNewCustomer(@RequestBody CustomerInformation customerInformation) {
-		CustomerInformation newCustomer = new CustomerInformation();
-
-		newCustomer.setId(getNextId());
-		newCustomer.setCustomerName(customerInformation.getCustomerName());
-		newCustomer.setAddress(customerInformation.getAddress());
-		newCustomer.setListOfAccounts(customerInformation.getListOfAccounts());
-
-		jsonDBTemplate.insert(newCustomer);
+	public CustomerInformation createNewCustomer(@RequestBody CustomerInformation customerInformation) {
+		customerInformation.setId(getNextId());
+		jsonDBTemplate.insert(customerInformation);
+		return customerInformation;
 	}
 
 	private int getNextId() {
