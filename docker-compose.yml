@@ -1,0 +1,97 @@
+version: "1"
+services:
+ eureka-server:
+       container_name: eureka-server
+       image:
+            maheshm2195/eureka-server:latest
+       expose:
+            - 8761
+       ports:
+            - "8761:8761"   
+       hostname: eureka-server
+  config-server:
+       container_name: config-server
+       image:
+            maheshm2195/fund-management:latest
+       expose:
+            - 8000
+       ports:
+            - "8000:8000" 
+       links:
+       depends_on:
+ zuul-api-gateway:
+       container_name: zuul-api-gateway
+       image:
+            maheshm2195/zuul-service:latest
+       expose:
+            - 8002
+       ports:
+            - "8002:8002"
+       links:
+            - eureka-server:eureka-server
+            - config-server: config-server
+       depends_on:
+            - eureka-server
+            - config-server
+ customer-management:
+       container_name: customer-management
+       image:
+            maheshm2195/customer-management:latest
+       expose:
+            - 8080
+       ports:
+            - "8080:8080" 
+       links:
+            - eureka-server:eureka-server
+            - config-server: config-server
+       depends_on:
+            - eureka-server
+            - config-server
+ account-management:
+       container_name: account-management
+       image:
+            maheshm2195/account-management:latest
+       expose:
+            - 8081
+       ports:
+            - "8081:8081" 
+       links:
+            - eureka-server:eureka-server
+            - customer-management:customer-management
+            - config-server: config-server
+       depends_on:
+            - eureka-server
+            - customer-management
+            - config-server
+ services:
+       container_name: services
+       image:
+            maheshm2195/services:latest
+       expose:
+            - 8083
+       ports:
+            - "8083:8083" 
+       links:
+            - eureka-server:eureka-server
+            - account-management: account-management
+            - config-server: config-server
+       depends_on:
+            - eureka-server
+            - account-management
+            - config-server
+ fund-management:
+       container_name: fund-management
+       image:
+            maheshm2195/fund-management:latest
+       expose:
+            - 8082
+       ports:
+            - "8082:8082" 
+       links:
+            - eureka-server:eureka-server
+            - account-management: account-management
+            - config-server: config-server
+       depends_on:
+            - eureka-server
+            - account-management
+            - config-server
