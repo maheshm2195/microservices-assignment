@@ -1,14 +1,9 @@
-package com.nagarro.microservices.assignment.accountmanagement.dto;
+package com.nagarro.microservices.assignment.services.dto;
 
 import java.util.List;
 
-import io.jsondb.annotation.Document;
-import io.jsondb.annotation.Id;
-
-@Document(collection = "accountInformation", schemaVersion = "1.0")
 public class AccountInformation {
 	
-	@Id
 	private int id;
 	private int customerId;
 	private String branch;

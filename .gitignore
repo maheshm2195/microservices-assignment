@@ -33,3 +33,4 @@ Servers/*
 .mvn/*
 */.mvn/*
 */mvnw*
+/.recommenders/

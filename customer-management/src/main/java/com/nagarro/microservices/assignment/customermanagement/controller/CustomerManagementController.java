@@ -41,7 +41,7 @@ public class CustomerManagementController {
 	}
 
 	@GetMapping(path="/customer/accounts/{customerId}")
-	public List<String> getCustomerAccounts(@PathVariable int customerId) {
+	public List<Integer> getCustomerAccounts(@PathVariable int customerId) {
 		CustomerInformation customer = jsonDBTemplate.findById(customerId, CustomerInformation.class);
 		return customer == null ? new ArrayList<>() : customer.getListOfAccounts();
 	}

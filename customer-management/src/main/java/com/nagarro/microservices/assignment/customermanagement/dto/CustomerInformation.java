@@ -12,7 +12,7 @@ public class CustomerInformation {
 	private int id;
 	private String customerName;
 	private String address;
-	List<String> listOfAccounts;
+	List<Integer> listOfAccounts;
 	
 	/**
 	 * @return the id
@@ -53,13 +53,13 @@ public class CustomerInformation {
 	/**
 	 * @return the listOfAccounts
 	 */
-	public List<String> getListOfAccounts() {
+	public List<Integer> getListOfAccounts() {
 		return listOfAccounts;
 	}
 	/**
 	 * @param listOfAccounts the listOfAccounts to set
 	 */
-	public void setListOfAccounts(List<String> listOfAccounts) {
+	public void setListOfAccounts(List<Integer> listOfAccounts) {
 		this.listOfAccounts = listOfAccounts;
 	}
 }
