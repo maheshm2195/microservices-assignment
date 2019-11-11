@@ -18,7 +18,7 @@ import io.jsondb.JsonDBTemplate;
 @RestController
 public class CustomerManagementController {
 
-	String dbFilesLocation = "D:\\OneDrive - Nagarro\\D_Drive\\NAGP\\Session 6-microservices\\Assignment\\projects";
+	String dbFilesLocation = "C:\\";
 	String baseScanPackage = "com.nagarro.microservices.assignment.customermanagement.dto";
 	JsonDBTemplate jsonDBTemplate = new JsonDBTemplate(dbFilesLocation, baseScanPackage);
 

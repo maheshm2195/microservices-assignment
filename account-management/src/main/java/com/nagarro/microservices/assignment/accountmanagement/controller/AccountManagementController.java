@@ -25,7 +25,7 @@ public class AccountManagementController {
 	@Autowired
 	CustomerInformationProxy customerInformationProxy;
 	
-	String dbFilesLocation = "D:\\OneDrive - Nagarro\\D_Drive\\NAGP\\Session 6-microservices\\Assignment\\projects";
+	String dbFilesLocation = "C:\\";
 	String baseScanPackage = "com.nagarro.microservices.assignment.accountmanagement.dto";
 	JsonDBTemplate jsonDBTemplate = new JsonDBTemplate(dbFilesLocation, baseScanPackage);
 
